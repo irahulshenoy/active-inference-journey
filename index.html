@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Inference Learning Journey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Active Inference Learning Journey</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="total-progress">0%</div>
+                    <div class="stat-label">Overall Progress</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="current-streak">0</div>
+                    <div class="stat-label">Day Streak 🔥</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="days-until">252</div>
+                    <div class="stat-label">Days Until Exam</div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="phase-nav">
+            <button class="phase-btn active" data-phase="phase1">Phase 1: Foundations</button>
+            <button class="phase-btn" data-phase="phase2">Phase 2: Active Inference</button>
+            <button class="phase-btn" data-phase="phase3">Phase 3: Mastery</button>
+            <button class="phase-btn" data-phase="tonight">Tonight's Task ⭐</button>
+        </nav>
+
+        <main id="content">
+            <!-- Content will be loaded by JavaScript -->
+        </main>
+
+        <footer>
+            <button id="reset-btn" class="danger-btn">Reset All Progress</button>
+            <button id="export-btn" class="secondary-btn">Export Progress</button>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
