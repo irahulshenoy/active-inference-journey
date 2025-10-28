@@ -122,11 +122,10 @@ function getTodaysTask() {
     // Before start date
     if (dayNum < 1) {
         return {
-            phase: 'tonight',
-            dayNum: dayNum,
             found: true,
             beforeStart: true,
-            message: "Get ready! Complete tonight's starter tasks before Day 1 (Oct 28)!"
+            daysUntilStart: Math.abs(dayNum - 1),
+            message: `Get ready! ${Math.abs(dayNum - 1)} day(s) until Day 1 (October 28, 2025)`
         };
     }
     
@@ -159,13 +158,24 @@ function getTodaysTask() {
         }
     }
     
-    // After all 266 days
-    if (dayNum > 266) {
+    // After all 266 curriculum days but before exam
+    if (dayNum > 266 && dayNum <= 308) {
+        return {
+            found: true,
+            bufferPeriod: true,
+            dayNum: dayNum,
+            daysLeft: 308 - dayNum,
+            message: `🎯 Buffer Period - Review & Final Prep! ${308 - dayNum} days until exam.`
+        };
+    }
+    
+    // After exam date
+    if (dayNum > 308) {
         return {
             found: false,
             afterEnd: true,
             dayNum: dayNum,
-            message: "🎉 Journey Complete! You've finished all 266 days! Time to ace that exam!"
+            message: "🎉 Journey Complete! Exam time has arrived!"
         };
     }
     
@@ -183,9 +193,11 @@ function updateTodayInfo() {
     
     if (todayInfoEl) {
         if (todayTask.beforeStart) {
-            todayInfoEl.innerHTML = `📅 <strong>Before Day 1</strong> - Complete starter tasks!`;
+            todayInfoEl.innerHTML = `📅 <strong>${todayTask.daysUntilStart} day(s) until Day 1</strong> - October 28, 2025`;
+        } else if (todayTask.bufferPeriod) {
+            todayInfoEl.innerHTML = `🎯 <strong>Day ${todayTask.dayNum} - Buffer/Review Period</strong> - ${todayTask.daysLeft} days until exam`;
         } else if (todayTask.afterEnd) {
-            todayInfoEl.innerHTML = `🎓 <strong>Journey Complete!</strong> - Exam time!`;
+            todayInfoEl.innerHTML = `🎓 <strong>Exam Day!</strong> - September 1, 2026`;
         } else if (todayTask.found) {
             todayInfoEl.innerHTML = `📅 <strong>Day ${todayTask.dayNum} of 266</strong> - ${todayTask.message}`;
         } else {
@@ -203,13 +215,6 @@ function calculateProgress(tasks) {
 
 // Get all tasks for a phase
 function getPhaseTasks(phase) {
-    if (phase === 'tonight') {
-        return learningPlan.tonight.tasks.map((task, i) => ({
-            id: `tonight-${i}`,
-            text: task
-        }));
-    }
-    
     const phaseData = learningPlan[phase];
     const tasks = [];
     
@@ -231,7 +236,6 @@ function getPhaseTasks(phase) {
 // Update overall stats
 function updateStats() {
     const allTasks = [
-        ...getPhaseTasks('tonight'),
         ...getPhaseTasks('phase1'),
         ...getPhaseTasks('phase2'),
         ...getPhaseTasks('phase3')
@@ -247,8 +251,6 @@ function renderContent() {
     
     if (state.currentPhase === 'today') {
         renderToday(content);
-    } else if (state.currentPhase === 'tonight') {
-        renderTonight(content);
     } else {
         renderPhase(content, state.currentPhase);
     }
@@ -259,25 +261,52 @@ function renderToday(container) {
     const todayTask = getTodaysTask();
     
     if (todayTask.beforeStart) {
-        // Show tonight's tasks
-        const tasks = getPhaseTasks('tonight');
         container.innerHTML = `
             <div class="today-view">
                 <div class="today-header">
-                    <h2>🌟 Get Ready for Day 1!</h2>
-                    <p class="today-subtitle">Complete these starter tasks before October 28, 2025</p>
+                    <h2>🚀 Get Ready to Start!</h2>
+                    <p class="today-subtitle">Your journey begins in ${todayTask.daysUntilStart} day(s)</p>
+                    <p class="today-dates">Day 1: October 28, 2025</p>
                 </div>
-                <div class="tonight-special">
-                    <h3>${learningPlan.tonight.title}</h3>
-                    <p style="color: white; margin-bottom: 20px;">${learningPlan.tonight.description}</p>
-                    ${tasks.map(task => `
-                        <div class="day-item ${state.checked.has(task.id) ? 'completed' : ''}">
-                            <div class="checkbox ${state.checked.has(task.id) ? 'checked' : ''}" 
-                                 onclick="checkTask('${task.id}')">
-                            </div>
-                            <div class="day-text">${task.text}</div>
-                        </div>
-                    `).join('')}
+                <div class="preparation-tips">
+                    <h3>📋 Before You Start:</h3>
+                    <ul>
+                        <li>✅ Bookmark this tracker</li>
+                        <li>✅ Set up your learning environment (desk, chair, lighting)</li>
+                        <li>✅ Block 2 hours daily on your calendar</li>
+                        <li>✅ Install Anaconda & VS Code</li>
+                        <li>✅ Create a learning journal (Notion, Google Docs, or markdown)</li>
+                        <li>✅ Tell someone about your goal for accountability</li>
+                    </ul>
+                    <p style="margin-top: 20px; color: var(--text-muted);">
+                        💡 Tip: Starting tomorrow, just click "TODAY" each morning and follow the daily task!
+                    </p>
+                </div>
+            </div>
+        `;
+    } else if (todayTask.bufferPeriod) {
+        container.innerHTML = `
+            <div class="today-view">
+                <div class="today-header">
+                    <h2>🎯 Buffer Period - Review & Polish!</h2>
+                    <p class="today-subtitle">Day ${todayTask.dayNum} of 308 calendar days</p>
+                    <p class="today-dates">${todayTask.daysLeft} days until exam on September 1, 2026</p>
+                </div>
+                <div class="buffer-activities">
+                    <h3>📚 Suggested Activities:</h3>
+                    <ul>
+                        <li>🔄 Review weak areas from earlier phases</li>
+                        <li>📝 Finalize literature review</li>
+                        <li>🎤 Practice presentation repeatedly</li>
+                        <li>❓ Prepare answers to anticipated questions</li>
+                        <li>📊 Polish figures and slides</li>
+                        <li>👥 Do mock presentations with lab mates</li>
+                        <li>🧘 Take care of your mental health</li>
+                        <li>😴 Get good sleep leading up to exam</li>
+                    </ul>
+                    <p style="margin-top: 20px; color: var(--success); font-weight: bold;">
+                        You've completed all 266 days of structured curriculum! Use this time wisely. 💪
+                    </p>
                 </div>
             </div>
         `;
@@ -285,9 +314,10 @@ function renderToday(container) {
         container.innerHTML = `
             <div class="today-view">
                 <div class="completion-message">
-                    <h2>🎉 Congratulations!</h2>
-                    <p>You've completed all 266 days of your Active Inference journey!</p>
-                    <p>Your qualifying exam is coming up - you're ready! 🎓</p>
+                    <h2>🎓 EXAM DAY!</h2>
+                    <p>Today is September 1, 2026 - Your qualifying exam!</p>
+                    <p>You've prepared for 308 days. You're ready!</p>
+                    <p style="font-size: 2rem; margin: 30px 0;">Good luck! 🍀</p>
                 </div>
             </div>
         `;
@@ -348,26 +378,6 @@ function renderToday(container) {
             </div>
         `;
     }
-}
-
-// Render tonight's tasks
-function renderTonight(container) {
-    const tasks = getPhaseTasks('tonight');
-    
-    container.innerHTML = `
-        <div class="tonight-special">
-            <h2>${learningPlan.tonight.title}</h2>
-            <p style="color: white; margin-bottom: 20px;">${learningPlan.tonight.description}</p>
-            ${tasks.map(task => `
-                <div class="day-item ${state.checked.has(task.id) ? 'completed' : ''}">
-                    <div class="checkbox ${state.checked.has(task.id) ? 'checked' : ''}" 
-                         onclick="checkTask('${task.id}')">
-                    </div>
-                    <div class="day-text">${task.text}</div>
-                </div>
-            `).join('')}
-        </div>
-    `;
 }
 
 // Render a phase

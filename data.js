@@ -1,16 +1,5 @@
 // Complete Learning Plan with Resources and Detailed Tasks
 const learningPlan = {
-    tonight: {
-        title: "🌟 Start Tonight! First Steps",
-        description: "Get your environment set up and complete these 4 simple tasks to begin your journey RIGHT NOW!",
-        tasks: [
-            "⏱️ 30 min: Watch 'PyTorch in 100 seconds' by Fireship + 'PyTorch Tutorial for Beginners' by freeCodeCamp (first 30 min) | Links: https://youtu.be/ORMx45xqWkA + https://youtu.be/V_xro1bcAuA",
-            "⏱️ 30 min: Install Anaconda from anaconda.com, then run 'conda install pytorch' in terminal, create your first tensor | Tutorial: https://pytorch.org/get-started/locally/",
-            "⏱️ 10 min: Create learning journal - use Notion (notion.so), Google Docs, or simple text file. Title: 'Active Inference Journey - Week 1'",
-            "⏱️ 5 min: Bookmark these sites: pytorch.org/docs, github.com/infer-actively/pymdp, activeinference.org, and THIS TRACKER!"
-        ]
-    },
-    
     phase1: {
         title: "Phase 1: Foundations",
         dates: "Oct 28, 2025 - Jan 19, 2026",

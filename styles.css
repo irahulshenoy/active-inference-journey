@@ -521,3 +521,32 @@ button {
         padding: 10px 15px;
     }
 }
+
+/* Preparation Tips Section */
+.preparation-tips, .buffer-activities {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 30px;
+    border: 1px solid var(--border);
+}
+
+.preparation-tips h3, .buffer-activities h3 {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.preparation-tips ul, .buffer-activities ul {
+    list-style: none;
+    padding: 0;
+}
+
+.preparation-tips li, .buffer-activities li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.1rem;
+}
+
+.preparation-tips li:last-child, .buffer-activities li:last-child {
+    border-bottom: none;
+}
