@@ -52,15 +52,19 @@ function saveState() {
     }
 }
 
-// Update streak
+// Update streak (using Chicago time)
 function updateStreak() {
-    const today = new Date().toDateString();
+    // Get today in Chicago timezone
+    const chicagoTime = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+    const today = new Date(chicagoTime).toDateString();
     
     if (state.lastCheckDate !== today) {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
+        // Get yesterday in Chicago timezone
+        const yesterdayChicago = new Date(chicagoTime);
+        yesterdayChicago.setDate(yesterdayChicago.getDate() - 1);
+        const yesterday = yesterdayChicago.toDateString();
         
-        if (state.lastCheckDate === yesterday.toDateString()) {
+        if (state.lastCheckDate === yesterday) {
             // Continue streak
         } else if (state.lastCheckDate !== null && state.lastCheckDate !== today) {
             // Streak broken
@@ -78,8 +82,9 @@ function checkTask(taskId) {
     } else {
         state.checked.add(taskId);
         
-        // Update streak on first check of the day
-        const today = new Date().toDateString();
+        // Update streak on first check of the day (using Chicago time)
+        const chicagoTime = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+        const today = new Date(chicagoTime).toDateString();
         if (state.lastCheckDate !== today) {
             state.streak++;
             state.lastCheckDate = today;
@@ -92,20 +97,28 @@ function checkTask(taskId) {
     updateStreak();
 }
 
-// Calculate days until exam
+// Calculate days until exam (using Chicago time)
 function calculateExamDays() {
-    const examDate = new Date('2026-09-01');
-    const today = new Date();
+    const examDate = new Date('2026-09-01T00:00:00');
+    
+    // Get current time in Chicago timezone
+    const chicagoTime = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+    const today = new Date(chicagoTime);
+    
     const diffTime = examDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     document.getElementById('days-until').textContent = diffDays;
 }
 
-// Calculate current day number (Day 1 = Oct 28, 2025)
+// Calculate current day number (Day 1 = Oct 28, 2025, Chicago time)
 function getCurrentDayNumber() {
-    const startDate = new Date('2025-10-28');
-    const today = new Date();
+    // Get current time in Chicago timezone
+    const chicagoTime = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+    const today = new Date(chicagoTime);
     today.setHours(0, 0, 0, 0);
+    
+    // Start date in Chicago timezone
+    const startDate = new Date('2025-10-28T00:00:00');
     startDate.setHours(0, 0, 0, 0);
     
     const diffTime = today - startDate;

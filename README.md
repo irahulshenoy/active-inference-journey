@@ -10,6 +10,8 @@ An interactive web-based tracker for your 10-month journey to mastering Active I
 - 📊 **Week progress** showing which days you've completed
 - 🔥 **No more hunting** - just click "TODAY" and start working!
 
+**Time Zone**: All dates and times use **Chicago Time (America/Chicago)** - so your day changes at midnight Chicago time, regardless of where you are in the world!
+
 ## Understanding the Timeline
 
 **308 Calendar Days**: Oct 28, 2025 → Sept 1, 2026  

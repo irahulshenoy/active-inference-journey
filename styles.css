@@ -550,3 +550,12 @@ button {
 .preparation-tips li:last-child, .buffer-activities li:last-child {
     border-bottom: none;
 }
+
+/* Timezone Note */
+.timezone-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 10px 0 15px 0;
+    font-style: italic;
+}
