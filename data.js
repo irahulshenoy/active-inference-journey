@@ -422,12 +422,12 @@ const learningPlan = {
                 ]
             },
             {
-                title: "Week 13: McDonald's Papers - Deep Dive 1",
+                title: "Week 13: Dr. McDonald's Papers - Deep Dive 1",
                 dates: "Jan 20 - Jan 26, 2026",
                 days: [
                     {
                         day: 1,
-                        task: "Read Wei et al. (2024) 'Active inference models of AV takeovers' https://journals.sagepub.com/doi/10.1177/00187208241295932 | This is your lab's work! Study methodology carefully"
+                        task: "Read Wei et al. (2024) 'Active inference models of AV takeovers' https://journals.sagepub.com/doi/10.1177/00187208241295932 |  Study methodology carefully"
                     },
                     {
                         day: 2,
